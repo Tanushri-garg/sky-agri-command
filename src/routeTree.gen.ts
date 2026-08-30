@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LiveFlightRouteImport } from './routes/live-flight'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as MissionPlannerRouteImport } from './routes/mission-planner'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LiveFlightRoute = LiveFlightRouteImport.update({
+  id: '/live-flight',
+  path: '/live-flight',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MissionPlannerRoute = MissionPlannerRouteImport.update({
+  id: '/mission-planner',
+  path: '/mission-planner',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/live-flight': typeof LiveFlightRoute
+  '/login': typeof LoginRoute
+  '/mission-planner': typeof MissionPlannerRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/live-flight': typeof LiveFlightRoute
+  '/login': typeof LoginRoute
+  '/mission-planner': typeof MissionPlannerRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/live-flight': typeof LiveFlightRoute
+  '/login': typeof LoginRoute
+  '/mission-planner': typeof MissionPlannerRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/live-flight' | '/login' | '/mission-planner'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/live-flight' | '/login' | '/mission-planner'
+  id: '__root__' | '/' | '/live-flight' | '/login' | '/mission-planner'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LiveFlightRoute: typeof LiveFlightRoute
+  LoginRoute: typeof LoginRoute
+  MissionPlannerRoute: typeof MissionPlannerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/live-flight': {
+      id: '/live-flight'
+      path: '/live-flight'
+      fullPath: '/live-flight'
+      preLoaderRoute: typeof LiveFlightRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mission-planner': {
+      id: '/mission-planner'
+      path: '/mission-planner'
+      fullPath: '/mission-planner'
+      preLoaderRoute: typeof MissionPlannerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LiveFlightRoute: LiveFlightRoute,
+  LoginRoute: LoginRoute,
+  MissionPlannerRoute: MissionPlannerRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
