@@ -101,7 +101,10 @@ function MissionPlanner() {
   };
 
   const save = async () => {
-    if (waypoints.length < 2) return toast.error("Add at least 2 waypoints before saving");
+    if (waypoints.length < 2) {
+      toast.error("Add at least 2 waypoints before saving");
+      return;
+    }
     setBusy(true);
     try {
       const saved = await missionApi.save({ ...(missionId ? { id: missionId } : {}), name, waypoints });
@@ -131,7 +134,10 @@ function MissionPlanner() {
   };
 
   const start = async () => {
-    if (waypoints.length < 2) return toast.error("Plan a route first");
+    if (waypoints.length < 2) {
+      toast.error("Plan a route first");
+      return;
+    }
     const saved = await missionApi.save({ ...(missionId ? { id: missionId } : {}), name, waypoints });
     setMissionId(saved.id);
     await command("Mission start", () => missionApi.start(saved));
