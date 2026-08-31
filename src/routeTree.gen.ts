@@ -13,6 +13,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as LiveFlightRouteImport } from './routes/live-flight'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MissionPlannerRouteImport } from './routes/mission-planner'
+import { Route as SensorsRouteImport } from './routes/sensors'
+import { Route as SprayControlRouteImport } from './routes/spray-control'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +36,32 @@ const MissionPlannerRoute = MissionPlannerRouteImport.update({
   path: '/mission-planner',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SensorsRoute = SensorsRouteImport.update({
+  id: '/sensors',
+  path: '/sensors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SprayControlRoute = SprayControlRouteImport.update({
+  id: '/spray-control',
+  path: '/spray-control',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/live-flight': typeof LiveFlightRoute
   '/login': typeof LoginRoute
   '/mission-planner': typeof MissionPlannerRoute
+  '/sensors': typeof SensorsRoute
+  '/spray-control': typeof SprayControlRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/live-flight': typeof LiveFlightRoute
   '/login': typeof LoginRoute
   '/mission-planner': typeof MissionPlannerRoute
+  '/sensors': typeof SensorsRoute
+  '/spray-control': typeof SprayControlRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +69,34 @@ export interface FileRoutesById {
   '/live-flight': typeof LiveFlightRoute
   '/login': typeof LoginRoute
   '/mission-planner': typeof MissionPlannerRoute
+  '/sensors': typeof SensorsRoute
+  '/spray-control': typeof SprayControlRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/live-flight' | '/login' | '/mission-planner'
+  fullPaths:
+    | '/'
+    | '/live-flight'
+    | '/login'
+    | '/mission-planner'
+    | '/sensors'
+    | '/spray-control'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/live-flight' | '/login' | '/mission-planner'
-  id: '__root__' | '/' | '/live-flight' | '/login' | '/mission-planner'
+  to:
+    | '/'
+    | '/live-flight'
+    | '/login'
+    | '/mission-planner'
+    | '/sensors'
+    | '/spray-control'
+  id:
+    | '__root__'
+    | '/'
+    | '/live-flight'
+    | '/login'
+    | '/mission-planner'
+    | '/sensors'
+    | '/spray-control'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +104,8 @@ export interface RootRouteChildren {
   LiveFlightRoute: typeof LiveFlightRoute
   LoginRoute: typeof LoginRoute
   MissionPlannerRoute: typeof MissionPlannerRoute
+  SensorsRoute: typeof SensorsRoute
+  SprayControlRoute: typeof SprayControlRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +138,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MissionPlannerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sensors': {
+      id: '/sensors'
+      path: '/sensors'
+      fullPath: '/sensors'
+      preLoaderRoute: typeof SensorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/spray-control': {
+      id: '/spray-control'
+      path: '/spray-control'
+      fullPath: '/spray-control'
+      preLoaderRoute: typeof SprayControlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +160,8 @@ const rootRouteChildren: RootRouteChildren = {
   LiveFlightRoute: LiveFlightRoute,
   LoginRoute: LoginRoute,
   MissionPlannerRoute: MissionPlannerRoute,
+  SensorsRoute: SensorsRoute,
+  SprayControlRoute: SprayControlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
