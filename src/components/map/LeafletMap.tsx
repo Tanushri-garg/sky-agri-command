@@ -56,6 +56,28 @@ function ClickHandler({ onMapClick }: { onMapClick?: (p: LatLng) => void }) {
   return null;
 }
 
+/** Leaflet computes tile offsets from the container size at init; the panel
+ * grows after mount (lazy load + flex layout), so force a recalculation. */
+function ResizeFixer() {
+  const map = useMap();
+  useEffect(() => {
+    const fix = () => map.invalidateSize();
+    const raf = requestAnimationFrame(fix);
+    const timer = setTimeout(fix, 300);
+    const container = map.getContainer();
+    const observer = new ResizeObserver(fix);
+    observer.observe(container);
+    window.addEventListener("resize", fix);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(timer);
+      observer.disconnect();
+      window.removeEventListener("resize", fix);
+    };
+  }, [map]);
+  return null;
+}
+
 function Follower({ position, follow }: { position: LatLng; follow?: boolean }) {
   const map = useMap();
   useEffect(() => {
@@ -91,6 +113,7 @@ export default function LeafletMap({
       attributionControl={false}
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" maxZoom={19} />
+      <ResizeFixer />
       <ClickHandler {...(editable && onMapClick ? { onMapClick } : {})} />
       <Follower position={position} {...(follow !== undefined ? { follow } : {})} />
 
