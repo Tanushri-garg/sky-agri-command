@@ -86,7 +86,7 @@ function SettingsPage() {
     setDraft((d) => ({ ...d, [key]: value }));
 
   const save = () => {
-    settingsStore.set(draft);
+    settingsStore.update(draft);
     toast.success("Settings saved", {
       description: draft.simulationMode
         ? "Simulation mode active — the mock hardware adapter drives all data."
@@ -96,7 +96,7 @@ function SettingsPage() {
 
   const reset = () => {
     setDraft(defaultSettings);
-    settingsStore.set(defaultSettings);
+    settingsStore.reset();
     toast.success("Settings restored to defaults");
   };
 
