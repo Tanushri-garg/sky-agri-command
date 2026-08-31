@@ -10,15 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FlightLogsRouteImport } from './routes/flight-logs'
 import { Route as LiveFlightRouteImport } from './routes/live-flight'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MissionPlannerRouteImport } from './routes/mission-planner'
 import { Route as SensorsRouteImport } from './routes/sensors'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SprayControlRouteImport } from './routes/spray-control'
+import { Route as TelemetryRouteImport } from './routes/telemetry'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FlightLogsRoute = FlightLogsRouteImport.update({
+  id: '/flight-logs',
+  path: '/flight-logs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LiveFlightRoute = LiveFlightRouteImport.update({
@@ -41,71 +49,102 @@ const SensorsRoute = SensorsRouteImport.update({
   path: '/sensors',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SprayControlRoute = SprayControlRouteImport.update({
   id: '/spray-control',
   path: '/spray-control',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TelemetryRoute = TelemetryRouteImport.update({
+  id: '/telemetry',
+  path: '/telemetry',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/flight-logs': typeof FlightLogsRoute
   '/live-flight': typeof LiveFlightRoute
   '/login': typeof LoginRoute
   '/mission-planner': typeof MissionPlannerRoute
   '/sensors': typeof SensorsRoute
+  '/settings': typeof SettingsRoute
   '/spray-control': typeof SprayControlRoute
+  '/telemetry': typeof TelemetryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/flight-logs': typeof FlightLogsRoute
   '/live-flight': typeof LiveFlightRoute
   '/login': typeof LoginRoute
   '/mission-planner': typeof MissionPlannerRoute
   '/sensors': typeof SensorsRoute
+  '/settings': typeof SettingsRoute
   '/spray-control': typeof SprayControlRoute
+  '/telemetry': typeof TelemetryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/flight-logs': typeof FlightLogsRoute
   '/live-flight': typeof LiveFlightRoute
   '/login': typeof LoginRoute
   '/mission-planner': typeof MissionPlannerRoute
   '/sensors': typeof SensorsRoute
+  '/settings': typeof SettingsRoute
   '/spray-control': typeof SprayControlRoute
+  '/telemetry': typeof TelemetryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/flight-logs'
     | '/live-flight'
     | '/login'
     | '/mission-planner'
     | '/sensors'
+    | '/settings'
     | '/spray-control'
+    | '/telemetry'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/flight-logs'
     | '/live-flight'
     | '/login'
     | '/mission-planner'
     | '/sensors'
+    | '/settings'
     | '/spray-control'
+    | '/telemetry'
   id:
     | '__root__'
     | '/'
+    | '/flight-logs'
     | '/live-flight'
     | '/login'
     | '/mission-planner'
     | '/sensors'
+    | '/settings'
     | '/spray-control'
+    | '/telemetry'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FlightLogsRoute: typeof FlightLogsRoute
   LiveFlightRoute: typeof LiveFlightRoute
   LoginRoute: typeof LoginRoute
   MissionPlannerRoute: typeof MissionPlannerRoute
   SensorsRoute: typeof SensorsRoute
+  SettingsRoute: typeof SettingsRoute
   SprayControlRoute: typeof SprayControlRoute
+  TelemetryRoute: typeof TelemetryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -115,6 +154,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/flight-logs': {
+      id: '/flight-logs'
+      path: '/flight-logs'
+      fullPath: '/flight-logs'
+      preLoaderRoute: typeof FlightLogsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/live-flight': {
@@ -145,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SensorsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/spray-control': {
       id: '/spray-control'
       path: '/spray-control'
@@ -152,16 +205,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SprayControlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/telemetry': {
+      id: '/telemetry'
+      path: '/telemetry'
+      fullPath: '/telemetry'
+      preLoaderRoute: typeof TelemetryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FlightLogsRoute: FlightLogsRoute,
   LiveFlightRoute: LiveFlightRoute,
   LoginRoute: LoginRoute,
   MissionPlannerRoute: MissionPlannerRoute,
   SensorsRoute: SensorsRoute,
+  SettingsRoute: SettingsRoute,
   SprayControlRoute: SprayControlRoute,
+  TelemetryRoute: TelemetryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
